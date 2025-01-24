@@ -17,7 +17,7 @@ fun BabaMoviesAppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenRoute.Splash.route
+        startDestination = ScreenRoute.Welcome.route
     ) {
         splashRoute(navController)
         welcomeRoute(navController)
