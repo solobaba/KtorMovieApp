@@ -6,6 +6,10 @@ import androidx.room.Room
 import com.xpresspayments.babamovieapp.data.BabaMovieAppDatabase
 import com.xpresspayments.babamovieapp.data.repositoryImpl.DataStoreOperationsImpl
 import com.xpresspayments.babamovieapp.domain.repository.DataStoreOperations
+import com.xpresspayments.babamovieapp.domain.repository.Repository
+import com.xpresspayments.babamovieapp.usecases.UseCases
+import com.xpresspayments.babamovieapp.usecases.readOnBoardingUsecase.ReadOnBoardingUseCase
+import com.xpresspayments.babamovieapp.usecases.saveOnBoardingUsecase.SaveOnBoardingUseCase
 import com.xpresspayments.babamovieapp.util.Constants.BABA_MOVIE_APP_DATABASE
 import dagger.Module
 import dagger.Provides
@@ -33,5 +37,14 @@ class AppModule {
         @ApplicationContext context: Context
     ) : DataStoreOperations {
         return DataStoreOperationsImpl(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUseCases(repository: Repository): UseCases {
+        return UseCases(
+            saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
+            readOnBoardingUseCase = ReadOnBoardingUseCase(repository)
+        )
     }
 }

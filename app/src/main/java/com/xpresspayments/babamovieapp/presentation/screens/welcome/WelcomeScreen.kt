@@ -19,21 +19,26 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.xpresspayments.babamovieapp.R
 import com.xpresspayments.babamovieapp.domain.model.OnboardingLayout
+import com.xpresspayments.babamovieapp.navigation.ScreenRoute
+import com.xpresspayments.babamovieapp.presentation.screens.home.HomeScreen
 import com.xpresspayments.babamovieapp.ui.theme.EXTRA_LARGE_PADDING
 import com.xpresspayments.babamovieapp.ui.theme.PAGING_INDICATOR_SPACING
 import com.xpresspayments.babamovieapp.ui.theme.PAGING_INDICATOR_WIDTH
@@ -44,7 +49,10 @@ import com.xpresspayments.babamovieapp.util.Constants.LAST_ON_BOARDING_PAGE
 import com.xpresspayments.babamovieapp.util.Constants.ON_BOARDING_PAGE_COUNT
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(
+    navController: NavController,
+    welcomeScreenViewModel: WelcomeScreenViewModel = hiltViewModel()
+) {
     val pages = listOf(
         OnboardingLayout.FirstOnboardingScreen,
         OnboardingLayout.SecondOnboardingScreen,
@@ -94,7 +102,11 @@ fun WelcomeScreen(navController: NavController) {
         OnboardingFinishButton(
             modifier = Modifier.weight(3f),
             pagerState = pagerState
-        ) { }
+        ) {
+            navController.popBackStack()
+            navController.navigate(ScreenRoute.Home.route)
+            welcomeScreenViewModel.saveOnBoardingState(completed = true)
+        }
     }
 }
 
@@ -168,7 +180,7 @@ fun OnboardingFinishButton(
                     } else {
                         Purple500
                     },
-                    contentColor = Color.White
+                    //contentColor = colorResource(R.color.purple_700)
                 )
             ) {
                 Text(

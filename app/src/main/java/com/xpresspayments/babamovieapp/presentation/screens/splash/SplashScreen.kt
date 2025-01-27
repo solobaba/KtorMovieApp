@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,13 +21,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.xpresspayments.babamovieapp.R
+import com.xpresspayments.babamovieapp.navigation.ScreenRoute
 import com.xpresspayments.babamovieapp.ui.theme.Purple500
 import com.xpresspayments.babamovieapp.ui.theme.Purple700
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    navController: NavController,
+    splashScreenViewModel: SplashScreenViewModel = hiltViewModel()
+) {
+
+    val onBoardingCompleted by splashScreenViewModel.onBoardingCompleted.collectAsState()
     val rotateLogo = remember { Animatable(0f) }
 
     LaunchedEffect(key1 = true) {
@@ -36,6 +45,14 @@ fun SplashScreen(navController: NavController) {
                 delayMillis = 200
             )
         )
+
+        navController.popBackStack()
+
+        if (onBoardingCompleted) {
+            navController.navigate(ScreenRoute.Home.route)
+        } else {
+            navController.navigate(ScreenRoute.Welcome.route)
+        }
     }
 
     Splash(rotateLogo.value)
