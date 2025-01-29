@@ -5,7 +5,6 @@ plugins {
     //alias(libs.plugins.ksp)
     id("kotlin-kapt")
     alias(libs.plugins.dagger.hilt)
-    //id("dagger.hilt.android.plugin")
     //id("kotlinx-serialization")
     id("kotlin-parcelize")
 }
