@@ -5,12 +5,12 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface HeroesMovieApi {
-    @GET("/boruto/heroes")
+    @GET("/solobaba/heroes")
     suspend fun getAllHeroes(
         @Query("page") page: Int = 1
     ): HeroesMovieResponse
 
-    @GET("/boruto/heroes/search")
+    @GET("/solobaba/heroes/search")
     suspend fun searchHeroes(
         @Query("name") name: String
     ): HeroesMovieResponse

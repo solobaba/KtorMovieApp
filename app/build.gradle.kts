@@ -86,6 +86,10 @@ dependencies {
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
 
+    //okhttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
     //Paging
     implementation(libs.androidx.paging.compose)
 
