@@ -22,6 +22,15 @@ class HeroRemoteMediator @Inject constructor(
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Hero>): MediatorResult {
         return try {
+            val page = when (loadType) {
+                LoadType.REFRESH -> {
+                    val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                }
+                LoadType.PREPEND -> TODO()
+                LoadType.APPEND -> TODO()
+            }
+
+
             val response = heroesMovieApi.getAllHeroes(page = 1)
 
             if (response.heroes.isNotEmpty()) {
@@ -47,5 +56,9 @@ class HeroRemoteMediator @Inject constructor(
         } catch (e: Exception) {
             return MediatorResult.Error(e)
         }
+    }
+
+    private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Hero>): Any {
+        return ""
     }
 }
